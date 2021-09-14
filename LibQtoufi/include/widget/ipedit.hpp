@@ -2,7 +2,6 @@
 
 #include <QWidget>
 #include <QHostAddress>
-
 #include <QLineEdit>
 #include <array>
 
