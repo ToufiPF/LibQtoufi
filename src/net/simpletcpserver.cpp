@@ -11,20 +11,24 @@
 
 namespace ltoufi {
 
-SimpleTcpServer::SimpleTcpServer(QObject *parent)
-    : QObject(parent), mServer(new QTcpServer(this))
+SimpleTcpServer::SimpleTcpServer(QObject *parent) :
+    QObject(parent),
+    mServer(new QTcpServer(this))
 {
     connect(mServer, &QTcpServer::acceptError, this, &SimpleTcpServer::acceptError);
     connect(mServer, &QTcpServer::newConnection, this, &SimpleTcpServer::newConnection);
 }
-SimpleTcpServer::SimpleTcpServer(const QHostAddress &host, quint16 port, QObject *parent)
-    : SimpleTcpServer(parent)
+
+SimpleTcpServer::SimpleTcpServer(const QHostAddress &host, quint16 port, QObject *parent) :
+    SimpleTcpServer(parent)
 {
     listen(host, port);
 }
+
 SimpleTcpServer::~SimpleTcpServer() {
     close();
 }
+
 
 bool SimpleTcpServer::listen(const QHostAddress &host, quint16 port) {
     bool listening = mServer->listen(host, port);

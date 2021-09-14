@@ -37,7 +37,8 @@ SOURCES += \
     src/log/logstream.cpp \
     src/log/ostreamlogger.cpp \
     src/net/simpletcpserver.cpp \
-    src/net/simpletcpsocket.cpp
+    src/net/simpletcpsocket.cpp \
+    src/widget/ipv4edit.cpp
 
 HEADERS += \
     include/log/logentry.hpp \
@@ -46,4 +47,5 @@ HEADERS += \
     include/log/ostreamlogger.hpp \
     include/net/simpletcpserver.hpp \
     include/net/simpletcpsocket.hpp \
+    include/widget/ipedit.hpp \
     libqtoufi_global.hpp

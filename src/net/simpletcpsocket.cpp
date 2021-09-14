@@ -32,12 +32,15 @@ QByteArray size_tToArray(qsizetype x) {
 
 namespace ltoufi {
 
-SimpleTcpSocket::SimpleTcpSocket(QObject* parent)
-    : SimpleTcpSocket(nullptr, parent) {
-
+SimpleTcpSocket::SimpleTcpSocket(QObject* parent) :
+    SimpleTcpSocket(nullptr, parent)
+{
 }
-SimpleTcpSocket::SimpleTcpSocket(QTcpSocket *underling, QObject *parent)
-    : QObject(parent), mSocket(underling == nullptr ? new QTcpSocket() : underling), mReceived(), mExpected(0)
+SimpleTcpSocket::SimpleTcpSocket(QTcpSocket *underling, QObject *parent) :
+    QObject(parent),
+    mSocket(underling == nullptr ? new QTcpSocket() : underling),
+    mReceived(),
+    mExpected(0)
 {
     mSocket->setParent(this);
     // transmit basic signals
@@ -56,9 +59,12 @@ SimpleTcpSocket::~SimpleTcpSocket() {
 void SimpleTcpSocket::connectToHost(QHostAddress host, quint16 port) {
     mSocket->connectToHost(host, port);
 }
+
+
 void SimpleTcpSocket::disconnectFromHost() {
     mSocket->disconnectFromHost();
 }
+
 void SimpleTcpSocket::sendData(const QByteArray &data) {
     if(mSocket->state() == QAbstractSocket::ConnectedState) {
         //write size of data
@@ -73,16 +79,17 @@ bool SimpleTcpSocket::waitForConnection(QHostAddress host, quint16 port, int tim
     return mSocket->state() == QAbstractSocket::ConnectedState
             || mSocket->waitForConnected(timeoutMs);
 }
+
 bool SimpleTcpSocket::waitForDisconnection(int timeoutMs) {
     mSocket->disconnectFromHost();
     return mSocket->state() == QAbstractSocket::UnconnectedState
             || mSocket->waitForDisconnected(timeoutMs);
 }
+
 bool SimpleTcpSocket::waitForDataSent(const QByteArray &data, int timeoutMs) {
     sendData(data);
     return mSocket->waitForBytesWritten(timeoutMs);
 }
-
 
 void SimpleTcpSocket::onReadyRead() {
     QTcpSocket *socket = static_cast<QTcpSocket*>(sender());
